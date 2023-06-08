@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import api from '../api/api';
 import { deleteTodo, updateTodo } from '../api/todo';
 
 export default function Card({ todo, todoList, setTodoList }) {
@@ -10,10 +9,10 @@ export default function Card({ todo, todoList, setTodoList }) {
   };
 
   //수정하기 버튼
-  const onfixHandler = async (todo) => {
+  const onfixHandler = async (e) => {
     const newTodo = {
       ...todo,
-      isCompleted: !todo.isCompleted,
+      // isCompleted: !todo.isCompleted,
     };
     updateTodo(newTodo)
       .then((res) => {
@@ -24,22 +23,26 @@ export default function Card({ todo, todoList, setTodoList }) {
         console.log(e);
         alert('수정에 실패했습니다.');
       });
+
     const todoId = todo.id;
-    const updatedTodo = todoList.map((todo) => {
+    const updatedTodoList = todoList.map((todo) => {
       if (todo.id === todoId) {
         return newTodo;
       }
       return todo;
     });
-    setTodoList(updatedTodo);
+    setTodoList(updatedTodoList);
   };
 
   //삭제하기 버튼
+  //새로고침하면 기능 작동 -> 렌더링 문제
   const ondeleteHandler = () => {
     deleteTodo(todo.id)
       .then((res) => {
-        console.log('deleteTodo:', res);
+        console.log(res);
         alert('삭제를 완료했습니다.');
+        const deleteTodoList = todoList.filter((item) => item.id !== todo.id);
+        setTodoList(deleteTodoList);
       })
       .catch((e) => {
         console.log(e);

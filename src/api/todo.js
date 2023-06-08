@@ -3,7 +3,6 @@ import { api } from './api';
 export const createTodo = async (todo) => {
   try {
     const res = await api.post('/todos', { todo });
-    console.log('createTodo:', res);
     return res;
   } catch (e) {
     throw e;
@@ -13,7 +12,6 @@ export const createTodo = async (todo) => {
 export const getTodo = async () => {
   try {
     const res = await api.get('/todos');
-    console.log('getTodo:', res);
     return res;
   } catch (error) {
     throw error;

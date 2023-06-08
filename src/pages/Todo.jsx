@@ -4,16 +4,7 @@ import { createTodo, getTodo } from '../api/todo';
 
 export default function Todo() {
   const [content, setContent] = useState('');
-  const [todoList, setTodoList] = useState([
-    {
-      id: 1,
-      todo: 'Hello World',
-      isCompleted: true,
-      userId: 2,
-    },
-  ]);
-  console.log('todoList:', todoList);
-  console.log('content:', content);
+  const [todoList, setTodoList] = useState([]);
 
   const onChageHandler = (e) => {
     setContent(e.target.value);
@@ -22,7 +13,6 @@ export default function Todo() {
   useEffect(() => {
     getTodo()
       .then((res) => {
-        console.log('getTodo:', res);
         setTodoList(res.data);
       })
       .catch((e) => {
