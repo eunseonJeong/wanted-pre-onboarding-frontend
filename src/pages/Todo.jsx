@@ -1,4 +1,3 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import Card from '../utils/Card';
 
@@ -9,21 +8,8 @@ export default function Todo() {
     setContent(e.target.value);
   };
 
-  const onSubmitHandler = async (e) => {
-    e.preventDefault();
-    const access_token = localStorage.getItem('name');
-    try {
-      const response = await axios.post('/todos', {
-        headers: {
-          Authorization: `Bearer ${access_token}`,
-        },
-      });
-      console.log('response:', response);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
+  const onSubmitHandler = () => {
+    return;
   };
 
   return (
@@ -41,8 +27,7 @@ export default function Todo() {
       </form>
 
       <br />
-
-      <Card />
+      <Card todo={content} />
     </>
   );
 }

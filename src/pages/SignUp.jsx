@@ -1,36 +1,93 @@
-import React from 'react';
+import React, { useState } from 'react';
+import api from '../api/api';
 import { useNavigate } from 'react-router-dom';
 
+export const SignupAuth = async (email, password) => {
+  try {
+    const response = await api.post('/auth/signup', {
+      email,
+      password,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 export default function Signup() {
-  //로그인 페이지에서 버튼을 클릭 시, 로그인을 진행하고 로그인이 정상적으로 완료되었을 시 /todo 경로로 이동해주세요
+  //유효성 검사 이메일:@ 포함, 비밀번호: 8자 이상, >ok
+  //입력된 이메일과 비밀번호가 유효성 검사를 통과하지 못한다면 button에 disabled 속성을 부여해주세요 >ok
+  //회원가입 페이지에서 버튼을 클릭 시 회원가입을 진행하고 회원가입이 정상적으로 완료되었을 시 /signin 경로로 이동해주세요 >ok
+  const [sign, setSign] = useState({
+    email: '',
+    password: '',
+  });
 
-  //로그인 API는 로그인이 성공했을 시 Response Body에 JWT를 포함해서 응답합니다.
-  //응답받은 JWT는 로컬 스토리지에 저장해주세요
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setSign((item) => ({
+      ...item,
+      [name]: value,
+    }));
+  };
+  //유효성 검사
+  const isEmailValid = (email) => {
+    return email.includes('@');
+  };
 
-  //로그인 여부에 따른 리다이렉트 처리를 구현해주세요
+  const isPasswordValid = (password) => {
+    return password.length >= 8;
+  };
 
-  //로컬 스토리지에 토큰이 있는 상태로 /signin 또는 /signup 페이지에 접속한다면 /todo 경로로 리다이렉트 시켜주세요
-  //로컬 스토리지에 토큰이 없는 상태로 /todo페이지에 접속한다면 /signin 경로로 리다이렉트 시켜주세요
+  const isFormValid = () => {
+    const { email, password } = sign;
+    return isEmailValid(email) && isPasswordValid(password);
+  };
 
   const navi = useNavigate();
-  const onClickButtonHandler = () => {
-    navi('/todo');
-  };
 
   const onSubmitHandler = (e) => {
     e.preventDefault();
+    SignupAuth(sign.email, sign.password)
+      .then((res) => {
+        console.log(res);
+        alert('회원가입 완료되었습니다.');
+        localStorage.setItem('accessToken', res.data.access_token);
+        navi('/signin');
+      })
+      .catch((e) => {
+        console.log(e);
+        alert('다시 회원가입해주세요.');
+      });
   };
 
   return (
-    <form onSubmit={onSubmitHandler}>
-      <h3>로그인 페이지</h3>
-      email:
-      <input data-testid="email-input" />
-      password:
-      <input data-testid="password-input" />
-      <button data-testid="signup-button" onClick={onClickButtonHandler}>
-        로그인
-      </button>
-    </form>
+    <>
+      <h3>회원가입 페이지</h3>
+      <form onSubmit={onSubmitHandler}>
+        email:
+        <input
+          data-testid="email-input"
+          type="email"
+          value={sign.email}
+          onChange={onChangeHandler}
+          name="email"
+          placeholder="이메일을 입력하세요."
+          required
+        />
+        password:
+        <input
+          data-testid="password-input"
+          type="password"
+          value={sign.password}
+          onChange={onChangeHandler}
+          name="password"
+          placeholder="비밀번호를 입력하세요."
+          required
+        />
+        <button data-testid="signup-button" disabled={!isFormValid()}>
+          회원가입
+        </button>
+      </form>
+    </>
   );
 }

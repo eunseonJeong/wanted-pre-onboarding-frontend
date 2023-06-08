@@ -1,18 +1,83 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import api from '../api/api';
+
+export const SigninAuth = async (email, password) => {
+  try {
+    const response = await api.post('/auth/signin', {
+      email,
+      password,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export default function Signin() {
-  //유효성 검사 이메일:@ 포함, 비밀번호: 8자 이상,
-  //입력된 이메일과 비밀번호가 유효성 검사를 통과하지 못한다면 button에 disabled 속성을 부여해주세요
-  //회원가입 페이지에서 버튼을 클릭 시 회원가입을 진행하고 회원가입이 정상적으로 완료되었을 시 /signin 경로로 이동해주세요
+  //로그인 페이지에서 버튼을 클릭 시, 로그인을 진행하고 로그인이 정상적으로 완료되었을 시 /todo 경로로 이동해주세요 >ok
+
+  //로그인 API는 로그인이 성공했을 시 Response Body에 JWT를 포함해서 응답합니다.
+  //응답받은 JWT는 로컬 스토리지에 저장해주세요
+
+  //로그인 여부에 따른 리다이렉트 처리를 구현해주세요
+
+  const [sign, setSign] = useState({
+    email: '',
+    password: '',
+  });
+
+  const onChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setSign((item) => ({
+      ...item,
+      [name]: value,
+    }));
+  };
+
+  const navi = useNavigate();
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    SigninAuth(sign.email, sign.password)
+      .then((res) => {
+        console.log(res);
+        alert('로그인되었습니다.');
+        localStorage.setItem('accessToken', res.data.access_token);
+        navi('/todo');
+      })
+      .catch((e) => {
+        console.log(e);
+        alert('다시 로그인해주세요.');
+      });
+  };
 
   return (
     <>
-      <h3>회원가입 페이지</h3>
-      email:
-      <input data-testid="email-input" />
-      password:
-      <input data-testid="password-input" />
-      <button data-testid="signup-button">회원가입</button>
+      <h3>로그인 페이지</h3>
+      <form onSubmit={onSubmitHandler}>
+        email:
+        <input
+          data-testid="email-input"
+          type="email"
+          value={sign.email}
+          onChange={onChangeHandler}
+          name="email"
+          placeholder="이메일을 입력하세요."
+          required
+        />
+        password:
+        <input
+          data-testid="password-input"
+          type="password"
+          value={sign.password}
+          onChange={onChangeHandler}
+          name="password"
+          placeholder="비밀번호를 입력하세요."
+          required
+        />
+        <button data-testid="signin-button">로그인</button>
+      </form>
     </>
   );
 }
