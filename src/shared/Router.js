@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "../pages/Login";
-import SignUp from "../pages/SignUp";
-import NotFound from "../pages/NotFound";
-import Header from "../components/Header";
-import Home from "../pages/Home";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import NotFound from '../pages/NotFound';
+import Home from '../pages/Home';
+import Signin from '../pages/Signin';
+import Header from '../componets/Header';
+import Signup from '../pages/Signup';
 
 function Router() {
   return (
@@ -11,8 +11,8 @@ function Router() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
