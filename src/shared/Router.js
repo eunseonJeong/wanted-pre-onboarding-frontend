@@ -4,6 +4,7 @@ import Home from '../pages/Home';
 import Signin from '../pages/Signin';
 import Header from '../componets/Header';
 import Signup from '../pages/Signup';
+import Todo from '../pages/Todo';
 
 function Router() {
   return (
@@ -11,6 +12,7 @@ function Router() {
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/todo" element={<Todo />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/*" element={<NotFound />} />

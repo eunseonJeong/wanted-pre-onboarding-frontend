@@ -7,7 +7,10 @@ export default function Signin() {
 
   return (
     <>
+      <h3>회원가입 페이지</h3>
+      email:
       <input data-testid="email-input" />
+      password:
       <input data-testid="password-input" />
       <button data-testid="signup-button">회원가입</button>
     </>
