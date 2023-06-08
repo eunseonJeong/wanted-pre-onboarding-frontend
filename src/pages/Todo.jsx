@@ -1,15 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Card from '../utils/Card';
+import { createTodo, getTodo } from '../api/todo';
 
 export default function Todo() {
   const [content, setContent] = useState('');
+  const [todoList, setTodoList] = useState([
+    {
+      id: 1,
+      todo: 'Hello World',
+      isCompleted: true,
+      userId: 2,
+    },
+  ]);
+  console.log('todoList:', todoList);
+  console.log('content:', content);
 
   const onChageHandler = (e) => {
     setContent(e.target.value);
   };
 
-  const onSubmitHandler = () => {
-    return;
+  useEffect(() => {
+    getTodo()
+      .then((res) => {
+        console.log('getTodo:', res);
+        setTodoList(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+        alert('리스트 조회에 실패했습니다.');
+      });
+  }, []);
+
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    createTodo(content)
+      .then((res) => {
+        console.log(res);
+        alert('추가되었습니다.');
+        setTodoList([...todoList, res.data]);
+        setContent('');
+      })
+      .catch((e) => {
+        console.log(e);
+        alert('다시 등록이 필요합니다.');
+      });
   };
 
   return (
@@ -25,9 +59,14 @@ export default function Todo() {
         />
         <button>확인</button>
       </form>
-
       <br />
-      <Card todo={content} />
+      {}
+
+      {todoList.map((item) => (
+        <div key={item.id}>
+          <Card todo={item} todoList={todoList} setTodoList={setTodoList} />
+        </div>
+      ))}
     </>
   );
 }

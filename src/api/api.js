@@ -1,7 +1,11 @@
 import axios from 'axios';
 
-const api = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
-});
+export const token = localStorage.getItem('accessToken');
 
-export default api;
+export const api = axios.create({
+  baseURL: process.env.REACT_APP_SERVER_URL,
+  headers: {
+    Authorization: `Bearer ${token}`,
+    'Content-type': 'application/json',
+  },
+});

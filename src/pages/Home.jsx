@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getLocalStorage } from '../shared/localStorage';
+import { token } from '../api/api';
 
 export default function Home() {
   //로그인 여부에 따른 리다이렉트 처리를 구현해주세요
@@ -9,7 +9,6 @@ export default function Home() {
   //로컬 스토리지에 토큰이 없는 상태로 /todo페이지에 접속한다면 /signin 경로로 리다이렉트 시켜주세요
   const navi = useNavigate();
   useEffect(() => {
-    const token = getLocalStorage('accessToken');
     if (token) {
       navi('/todo');
     } else {

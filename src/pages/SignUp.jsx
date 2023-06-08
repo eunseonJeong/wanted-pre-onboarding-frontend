@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../api/api';
+import { api } from '../api/api';
 import { useNavigate } from 'react-router-dom';
 
 export const SignupAuth = async (email, password) => {
@@ -51,7 +51,6 @@ export default function Signup() {
       .then((res) => {
         console.log(res);
         alert('회원가입 완료되었습니다.');
-        localStorage.setItem('accessToken', res.data.access_token);
         navi('/signin');
       })
       .catch((e) => {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../api/api';
+import { api } from '../api/api';
 
 export const SigninAuth = async (email, password) => {
   try {
@@ -19,8 +19,6 @@ export default function Signin() {
 
   //로그인 API는 로그인이 성공했을 시 Response Body에 JWT를 포함해서 응답합니다.
   //응답받은 JWT는 로컬 스토리지에 저장해주세요
-
-  //로그인 여부에 따른 리다이렉트 처리를 구현해주세요
 
   const [sign, setSign] = useState({
     email: '',
@@ -41,7 +39,7 @@ export default function Signin() {
     e.preventDefault();
     SigninAuth(sign.email, sign.password)
       .then((res) => {
-        console.log(res);
+        console.log('login:', res);
         alert('로그인되었습니다.');
         localStorage.setItem('accessToken', res.data.access_token);
         navi('/todo');
