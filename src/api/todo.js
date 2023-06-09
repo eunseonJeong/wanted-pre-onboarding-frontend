@@ -1,5 +1,29 @@
 import { api } from './api';
 
+export const SigninAuth = async (email, password) => {
+  try {
+    const response = await api.post('/auth/signin', {
+      email,
+      password,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const SignupAuth = async (email, password) => {
+  try {
+    const response = await api.post('/auth/signup', {
+      email,
+      password,
+    });
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+////////////////////////////////CRUD////////////////////////////////
 export const createTodo = async (todo) => {
   try {
     const res = await api.post('/todos', { todo });
@@ -38,3 +62,4 @@ export const deleteTodo = async (id) => {
     throw e;
   }
 };
+////////////////////////////////CRUD////////////////////////////////

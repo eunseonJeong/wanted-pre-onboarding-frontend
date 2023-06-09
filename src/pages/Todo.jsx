@@ -10,9 +10,9 @@ export default function Todo() {
   const navi = useNavigate();
 
   useEffect(() => {
-    if (!token) {
-      return navi('/signin');
-    }
+    // if (!token) {
+    //   return navi('/signin');
+    // }
     getTodo()
       .then((res) => {
         setTodoList(res.data);
@@ -41,16 +41,17 @@ export default function Todo() {
   return (
     <>
       <h1>TODOLIST</h1>
-      <form onSubmit={onSubmitHandler}>
-        <input
-          required
-          type="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="내용을 입력하세요."
-        />
-        <button>확인</button>
-      </form>
+      <input
+        data-testid="new-todo-input"
+        required
+        type="content"
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="내용을 입력하세요."
+      />
+      <button data-testid="new-todo-add-button" onClick={onSubmitHandler}>
+        추가
+      </button>
       <br />
       {todoList.map((item) => (
         <div key={item.id}>
