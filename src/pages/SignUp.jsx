@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useTokenCheck from '../hook/useTokenCheck';
 import useValidCheck from '../hook/useValidCheck';
 import { SignupAuth } from '../api/todo';
 import { Input } from '../componets/Input';
@@ -23,8 +22,6 @@ export default function Signup() {
   };
 
   const navi = useNavigate();
-
-  useTokenCheck();
 
   const { isFormValid } = useValidCheck(sign);
 

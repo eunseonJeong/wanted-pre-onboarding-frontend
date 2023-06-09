@@ -2,13 +2,14 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { token } from '../api/api';
 
-function useTokenCheck() {
+export default function useTokenCheck() {
   const navi = useNavigate();
+
   useEffect(() => {
     if (token) {
       navi('/');
     }
-  }, []);
+  }, [token, navi]);
+
   return;
 }
-export default useTokenCheck;
