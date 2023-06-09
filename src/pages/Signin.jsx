@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useTokenCheck from '../hook/useTokenCheck';
 import useValidCheck from '../hook/useValidCheck';
@@ -7,6 +7,7 @@ import Template from '../componets/Template';
 import { Input } from '../componets/Input';
 import Button from '../componets/Button';
 import styled from 'styled-components';
+import { token } from '../api/api';
 
 export default function Signin() {
   const [sign, setSign] = useState({
@@ -23,7 +24,11 @@ export default function Signin() {
   };
 
   const navi = useNavigate();
-
+  useEffect(() => {
+    if (token) {
+      navi('/todo');
+    }
+  }, [token]);
   useTokenCheck();
 
   const { isFormValid } = useValidCheck(sign);

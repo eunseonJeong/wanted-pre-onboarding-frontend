@@ -4,7 +4,7 @@ import Button from '../componets/Button';
 import styled from 'styled-components';
 import TodoItem from '../componets/TodoItem';
 
-export default function Card({ todo, todoList, setTodoList }) {
+export default function FixDeleteTodo({ todo, todoList, setTodoList }) {
   const [isCompleted, setIsCompletedx] = useState(false);
   const [fixTodo, setFixTodo] = useState(todo.todo);
 

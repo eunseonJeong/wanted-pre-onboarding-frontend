@@ -15,7 +15,7 @@ const TemplateBlock = styled.div`
 
   margin: 0 auto;
 
-  margin-top: 96px;
+  margin-top: 30px;
   margin-bottom: 32px;
   padding: 5%;
   flex-direction: column;
