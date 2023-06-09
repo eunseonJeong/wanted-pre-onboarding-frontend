@@ -6,10 +6,6 @@ export default function Todo() {
   const [content, setContent] = useState('');
   const [todoList, setTodoList] = useState([]);
 
-  const onChageHandler = (e) => {
-    setContent(e.target.value);
-  };
-
   useEffect(() => {
     getTodo()
       .then((res) => {
@@ -27,7 +23,7 @@ export default function Todo() {
       .then((res) => {
         console.log(res);
         alert('추가되었습니다.');
-        setTodoList([...todoList, res.data]);
+        // setTodoList([...todoList, res.data]);
         setContent('');
       })
       .catch((e) => {
@@ -44,14 +40,12 @@ export default function Todo() {
           required
           type="content"
           value={content}
-          onChange={onChageHandler}
+          onChange={(e) => setContent(e.target.value)}
           placeholder="내용을 입력하세요."
         />
         <button>확인</button>
       </form>
       <br />
-      {}
-
       {todoList.map((item) => (
         <div key={item.id}>
           <Card todo={item} todoList={todoList} setTodoList={setTodoList} />

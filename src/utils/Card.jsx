@@ -3,18 +3,16 @@ import { deleteTodo, updateTodo } from '../api/todo';
 
 export default function Card({ todo, todoList, setTodoList }) {
   const [isCompleted, setIsCompletedx] = useState(false);
-
-  const onChageHandler = (e) => {
-    setIsCompletedx(e.target.value);
-  };
+  const [fixTodo, setFixTodo] = useState(todo.todo);
+  console.log('FIX:', fixTodo);
 
   //수정하기 버튼
   const onfixHandler = async (e) => {
     const newTodo = {
       ...todo,
-      // isCompleted: !todo.isCompleted,
+      todo: fixTodo,
     };
-    updateTodo(newTodo)
+    await updateTodo(newTodo)
       .then((res) => {
         console.log('updateTodo:', res);
         alert('수정완료되었습니다.');
@@ -23,19 +21,19 @@ export default function Card({ todo, todoList, setTodoList }) {
         console.log(e);
         alert('수정에 실패했습니다.');
       });
+    setIsCompletedx((isCompleted) => !isCompleted);
+  };
 
-    const todoId = todo.id;
-    const updatedTodoList = todoList.map((todo) => {
-      if (todo.id === todoId) {
-        return newTodo;
-      }
-      return todo;
-    });
-    setTodoList(updatedTodoList);
+  const onFixChageHandler = (e) => {
+    const newTodo = {
+      ...todo,
+      todo: e.target.value,
+    };
+    setFixTodo(e.target.value);
+    updateTodo(newTodo);
   };
 
   //삭제하기 버튼
-  //새로고침하면 기능 작동 -> 렌더링 문제
   const ondeleteHandler = () => {
     deleteTodo(todo.id)
       .then((res) => {
@@ -59,7 +57,7 @@ export default function Card({ todo, todoList, setTodoList }) {
             <span>{todo.todo}</span>
           </label>
           {/* 인풋 만들어! */}
-          <input type="text" value={isCompleted} onChange={onChageHandler} />
+          <input type="text" value={fixTodo} onChange={onFixChageHandler} />
           <button data-testid="modify-button" onClick={onfixHandler}>
             제출
           </button>
@@ -73,7 +71,12 @@ export default function Card({ todo, todoList, setTodoList }) {
             <input type="checkbox" />
             <span>{todo.todo}</span>
           </label>
-          <button data-testid="modify-button" onClick={onfixHandler}>
+          <button
+            data-testid="modify-button"
+            onClick={() => {
+              setIsCompletedx((isCompleted) => !isCompleted);
+            }}
+          >
             수정
           </button>
           <button data-testid="delete-button" onClick={ondeleteHandler}>
