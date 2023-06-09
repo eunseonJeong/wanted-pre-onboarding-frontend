@@ -6,6 +6,7 @@ import { Input } from '../componets/Input';
 import Button from '../componets/Button';
 import Template from '../componets/Template';
 import styled from 'styled-components';
+import useTokenCheck from '../hook/useTokenCheck';
 
 export default function Signup() {
   const [sign, setSign] = useState({
@@ -22,6 +23,8 @@ export default function Signup() {
   };
 
   const navi = useNavigate();
+
+  useTokenCheck();
 
   const { isFormValid } = useValidCheck(sign);
 
