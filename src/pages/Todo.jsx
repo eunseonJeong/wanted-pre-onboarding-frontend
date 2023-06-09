@@ -1,25 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../utils/Card';
 import { createTodo, getTodo } from '../api/todo';
-import { token } from '../api/api';
-import { useNavigate } from 'react-router-dom';
+import Button from '../componets/Button';
+import { Input } from '../componets/Input';
+import styled from 'styled-components';
+import Template from '../componets/Template';
 
 export default function Todo() {
   const [content, setContent] = useState('');
   const [todoList, setTodoList] = useState([]);
-  const navi = useNavigate();
 
   useEffect(() => {
-    // if (!token) {
-    //   return navi('/signin');
-    // }
     getTodo()
       .then((res) => {
         setTodoList(res.data);
       })
       .catch((e) => {
         console.log(e);
-        alert('리스트 조회에 실패했습니다.');
+        // alert('리스트 조회에 실패했습니다.');
       });
   }, []);
 
@@ -39,9 +37,9 @@ export default function Todo() {
   };
 
   return (
-    <>
+    <Template>
       <h1>TODOLIST</h1>
-      <input
+      <Input
         data-testid="new-todo-input"
         required
         type="content"
@@ -49,15 +47,19 @@ export default function Todo() {
         onChange={(e) => setContent(e.target.value)}
         placeholder="내용을 입력하세요."
       />
-      <button data-testid="new-todo-add-button" onClick={onSubmitHandler}>
+      <Button data-testid="new-todo-add-button" onClick={onSubmitHandler}>
         추가
-      </button>
+      </Button>
       <br />
       {todoList.map((item) => (
         <div key={item.id}>
           <Card todo={item} todoList={todoList} setTodoList={setTodoList} />
         </div>
       ))}
-    </>
+    </Template>
   );
 }
+
+const StBackground = styled.div`
+  background: #e9ecef;
+`;

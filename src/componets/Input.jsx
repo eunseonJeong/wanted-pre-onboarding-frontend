@@ -25,11 +25,9 @@ export const Input = ({
 };
 
 const StInput = styled.input`
-  display: block;
-  background: white;
   outline: none;
-  width: 400px;
-  height: 50px;
+  width: 450px;
+  height: 40px;
   margin: 0px;
   padding: 0 10px;
   border: 1px solid;

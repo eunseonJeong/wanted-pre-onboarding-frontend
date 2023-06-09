@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { deleteTodo, updateTodo } from '../api/todo';
+import Button from '../componets/Button';
+import styled from 'styled-components';
+import TodoItem from '../componets/TodoItem';
 
 export default function Card({ todo, todoList, setTodoList }) {
   const [isCompleted, setIsCompletedx] = useState(false);
@@ -57,12 +60,12 @@ export default function Card({ todo, todoList, setTodoList }) {
   };
 
   return (
-    <>
+    <TodoListBlock>
       {isCompleted ? (
         <li>
           <label>
             <input type="checkbox" />
-            <span>{todo.todo}</span>
+            <TodoItem text={todo.todo} done={true} />
           </label>
           <input
             data-testid="modify-input"
@@ -70,12 +73,12 @@ export default function Card({ todo, todoList, setTodoList }) {
             value={fixTodo}
             onChange={onFixChageHandler}
           />
-          <button data-testid="submit-button" onClick={onfixHandler}>
+          <Button data-testid="submit-button" onClick={onfixHandler}>
             제출
-          </button>
-          <button data-testid="cancel-button" onClick={onRestoreHandler}>
+          </Button>
+          <Button data-testid="cancel-button" onClick={onRestoreHandler}>
             취소
-          </button>
+          </Button>
         </li>
       ) : (
         <li>
@@ -83,14 +86,21 @@ export default function Card({ todo, todoList, setTodoList }) {
             <input type="checkbox" />
             <span>{todo.todo}</span>
           </label>
-          <button data-testid="modify-button" onClick={onRestoreHandler}>
+          <Button data-testid="modify-button" onClick={onRestoreHandler}>
             수정
-          </button>
-          <button data-testid="delete-button" onClick={ondeleteHandler}>
+          </Button>
+          <Button data-testid="delete-button" onClick={ondeleteHandler}>
             삭제
-          </button>
+          </Button>
         </li>
       )}
-    </>
+    </TodoListBlock>
   );
 }
+
+const TodoListBlock = styled.div`
+  flex: 1;
+  padding: 20px 32px;
+  padding-bottom: 48px;
+  overflow-y: auto;
+`;
