@@ -3,14 +3,20 @@ import Card from '../utils/Card';
 import { createTodo, getTodo } from '../api/todo';
 import Button from '../componets/Button';
 import { Input } from '../componets/Input';
-import styled from 'styled-components';
 import Template from '../componets/Template';
+import { token } from '../api/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function Todo() {
   const [content, setContent] = useState('');
   const [todoList, setTodoList] = useState([]);
 
+  const navi = useNavigate();
+
   useEffect(() => {
+    if (!token) {
+      navi('/');
+    }
     getTodo()
       .then((res) => {
         setTodoList(res.data);
@@ -47,7 +53,12 @@ export default function Todo() {
         onChange={(e) => setContent(e.target.value)}
         placeholder="내용을 입력하세요."
       />
-      <Button data-testid="new-todo-add-button" onClick={onSubmitHandler}>
+      <Button
+        w="70px"
+        h="40px"
+        data-testid="new-todo-add-button"
+        onClick={onSubmitHandler}
+      >
         추가
       </Button>
       <br />
@@ -59,7 +70,3 @@ export default function Todo() {
     </Template>
   );
 }
-
-const StBackground = styled.div`
-  background: #e9ecef;
-`;

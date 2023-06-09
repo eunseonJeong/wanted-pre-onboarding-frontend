@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import useTokenCheck from '../hook/useTokenCheck';
 import useValidCheck from '../hook/useValidCheck';
 import { SigninAuth } from '../api/todo';
+import Template from '../componets/Template';
+import { Input } from '../componets/Input';
+import Button from '../componets/Button';
+import styled from 'styled-components';
 
 export default function Signin() {
   const [sign, setSign] = useState({
@@ -39,11 +43,11 @@ export default function Signin() {
   };
 
   return (
-    <>
-      <h3>로그인 페이지</h3>
-      <form onSubmit={onSubmitHandler}>
-        email:
-        <input
+    <Template>
+      <StForm onSubmit={onSubmitHandler}>
+        <h3>로그인 페이지</h3>
+        email
+        <Input
           data-testid="email-input"
           type="email"
           value={sign.email}
@@ -52,8 +56,8 @@ export default function Signin() {
           placeholder="이메일을 입력하세요."
           required
         />
-        password:
-        <input
+        <span>password</span>
+        <Input
           data-testid="password-input"
           type="password"
           value={sign.password}
@@ -62,10 +66,19 @@ export default function Signin() {
           placeholder="비밀번호를 입력하세요."
           required
         />
-        <button data-testid="signin-button" disabled={!isFormValid()}>
+        <Button w="50%" data-testid="signin-button" disabled={!isFormValid()}>
           로그인
-        </button>
-      </form>
-    </>
+        </Button>
+      </StForm>
+    </Template>
   );
 }
+
+const StForm = styled.form`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
