@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { api } from '../api/api';
 import { useNavigate } from 'react-router-dom';
+import useTokenCheck from '../hook/useTokenCheck';
+import useValidCheck from '../hook/useValidCheck';
 
 export const SignupAuth = async (email, password) => {
   try {
@@ -17,6 +19,7 @@ export default function Signup() {
   //유효성 검사 이메일:@ 포함, 비밀번호: 8자 이상, >ok
   //입력된 이메일과 비밀번호가 유효성 검사를 통과하지 못한다면 button에 disabled 속성을 부여해주세요 >ok
   //회원가입 페이지에서 버튼을 클릭 시 회원가입을 진행하고 회원가입이 정상적으로 완료되었을 시 /signin 경로로 이동해주세요 >ok
+
   const [sign, setSign] = useState({
     email: '',
     password: '',
@@ -29,21 +32,12 @@ export default function Signup() {
       [name]: value,
     }));
   };
-  //유효성 검사
-  const isEmailValid = (email) => {
-    return email.includes('@');
-  };
-
-  const isPasswordValid = (password) => {
-    return password.length >= 8;
-  };
-
-  const isFormValid = () => {
-    const { email, password } = sign;
-    return isEmailValid(email) && isPasswordValid(password);
-  };
 
   const navi = useNavigate();
+
+  useTokenCheck();
+
+  const { isFormValid } = useValidCheck(sign);
 
   const onSubmitHandler = (e) => {
     e.preventDefault();

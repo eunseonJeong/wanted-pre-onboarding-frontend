@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import Card from '../utils/Card';
 import { createTodo, getTodo } from '../api/todo';
+import { token } from '../api/api';
+import { useNavigate } from 'react-router-dom';
 
 export default function Todo() {
   const [content, setContent] = useState('');
   const [todoList, setTodoList] = useState([]);
+  const navi = useNavigate();
 
   useEffect(() => {
+    if (!token) {
+      return navi('/signin');
+    }
     getTodo()
       .then((res) => {
         setTodoList(res.data);

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { api } from '../api/api';
+import useTokenCheck from '../hook/useTokenCheck';
+import useValidCheck from '../hook/useValidCheck';
 
 export const SigninAuth = async (email, password) => {
   try {
@@ -35,13 +37,16 @@ export default function Signin() {
 
   const navi = useNavigate();
 
+  useTokenCheck();
+
+  const { isFormValid } = useValidCheck(sign);
+
   const onSubmitHandler = (e) => {
     e.preventDefault();
     SigninAuth(sign.email, sign.password)
       .then((res) => {
-        console.log('login:', res);
+        localStorage.setItem('access_Token', res.data.access_token);
         alert('로그인되었습니다.');
-        localStorage.setItem('accessToken', res.data.access_token);
         navi('/todo');
       })
       .catch((e) => {
@@ -74,7 +79,9 @@ export default function Signin() {
           placeholder="비밀번호를 입력하세요."
           required
         />
-        <button data-testid="signin-button">로그인</button>
+        <button data-testid="signin-button" disabled={!isFormValid()}>
+          로그인
+        </button>
       </form>
     </>
   );
