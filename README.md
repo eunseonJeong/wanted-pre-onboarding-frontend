@@ -5,5 +5,4 @@
 
 <br/>
 
-데모 영상 : 버셀로 배포
-https://wanted-pre-onboarding-frontend-1xje.vercel.app
+데모 영상 : https://drive.google.com/file/d/1wkXbybtozW9eJZ7lzS-4kpltM-_3ka-C/view?usp=sharing
