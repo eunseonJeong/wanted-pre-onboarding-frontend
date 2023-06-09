@@ -72,7 +72,7 @@ export default function Signin() {
         <Button
           w="50%"
           data-testid="signin-button"
-          onClick={() => navi('signup')}
+          onClick={() => navi('/signup')}
         >
           회원가입으로 이동
         </Button>

@@ -5,4 +5,5 @@
 
 <br/>
 
-데모 영상 : 버셀로 배포예정
+데모 영상 : 버셀로 배포
+https://wanted-pre-onboarding-frontend-1xje.vercel.app
