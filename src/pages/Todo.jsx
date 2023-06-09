@@ -23,7 +23,7 @@ export default function Todo() {
       .then((res) => {
         console.log(res);
         alert('추가되었습니다.');
-        // setTodoList([...todoList, res.data]);
+        setTodoList([...todoList, res.data]);
         setContent('');
       })
       .catch((e) => {
